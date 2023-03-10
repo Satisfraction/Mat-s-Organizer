@@ -210,19 +210,22 @@ class FileOrganizer(QWidget):
         self.keywords = text
 
     def search_files(self):
-        file_dialog = QFileDialog()
-        file_dialog.setFileMode(QFileDialog.DirectoryOnly)
-        directory = file_dialog.getExistingDirectory(self, "Select Search Directory")
-        if directory:
-            matching_files = []
-            for root, dirs, files in os.walk(directory):
-                for file in files:
-                    if self.matches_keywords(file):
-                        matching_files.append(os.path.join(root, file))
-            if matching_files:
-                QMessageBox.information(self, "Search Results", f"Found {len(matching_files)} files:\n\n" + "\n".join(matching_files))
-            else:
-                QMessageBox.information(self, "Search Results", "No matching files found.")
+        if not self.keywords:
+            QMessageBox.warning(self, "Error", "No keywords entered.")
+            return
+
+        if not self.selected_files:
+            QMessageBox.warning(self, "Error", "No files selected.")
+            return
+
+        matching_files = []
+        for file_path in self.selected_files:
+            if self.keywords.lower() in file_path.lower():
+                matching_files.append(file_path)
+
+        self.selected_files = matching_files
+        self.update_files_table()
+        QMessageBox.information(self, "Search Results", f"{len(matching_files)} files found matching the keyword(s): {self.keywords}")
 
     def matches_keywords(self, file_name):
         if not self.keywords:
@@ -261,9 +264,21 @@ class FileOrganizer(QWidget):
         elif mode == "copy":
             QMessageBox.information(self, "Files Copied", "Selected files copied successfully.")
 
+    def closeEvent(self, event):
+        reply = QMessageBox.question(
+            self,
+            "Confirm Exit",
+            "Are you sure you want to exit Mat's Organizer?",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No,
+        )
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    file_organizer = FileOrganizer()
+    file_organizer = FileOrganizer()  
     file_organizer.show()
     sys.exit(app.exec_())
