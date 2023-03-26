@@ -232,37 +232,33 @@ class FileOrganizer(QWidget):
             return True
         else:
             return all(keyword in file_name for keyword in self.keywords.split())
-
-    def move_files(self, mode):
-        if not self.target_directory:
-            QMessageBox.warning(self, "Error", "Target directory not set.")
-            return
-
-        if not self.selected_files:
-            QMessageBox.warning(self, "Error", "No files selected.")
-            return
-
-        for file_path in self.selected_files:
-            file_name = os.path.basename(file_path)
-            target_path = os.path.join(self.target_directory, file_name)
-            if os.path.exists(target_path):
-                reply = QMessageBox.question(self, "File Exists", f"{target_path} already exists. Replace it?")
-                if reply == QMessageBox.Yes:
-                    os.remove(target_path)
-                else:
-                    continue
-            if mode == "move":
-                shutil.move(file_path, target_path)
-            elif mode == "copy":
-                shutil.copy(file_path, target_path)
-
-        self.selected_files = []
-        self.update_files_table()
-
-        if mode == "move":
-            QMessageBox.information(self, "Files Moved", "Selected files moved successfully.")
-        elif mode == "copy":
-            QMessageBox.information(self, "Files Copied", "Selected files copied successfully.")
+    
+    # def move_files(self, mode):
+    #     if not self.target_directory:
+    #         QMessageBox.warning(self, 'Error', 'Target directory not set.')
+    #         return
+    #     if not self.selected_files:
+    #         QMessageBox.warning(self, 'Error', 'No files selected.')
+    #         return
+    #     for file_path in self.selected_files:
+    #         file_name = os.path.basename(file_path)
+    #         target_path = os.path.join(self.target_directory, file_name)
+    #         if os.path.exists(target_path):
+    #             reply = QMessageBox.question(self, 'File Exists', f"{target_path} already exists. Replace it?")
+    #             if reply == QMessageBox.Yes:
+    #                 os.remove(target_path)
+    #             else:
+    #                 continue
+    #         if mode == 'move':
+    #             shutil.move(file_path, target_path)
+    #         elif mode == 'copy':
+    #             shutil.copy(file_path, target_path)
+    #     self.selected_files = []
+    #     # self.update_files_table()  # either define the method or remove this line
+    #     if mode == 'move':
+    #         QMessageBox.information(self, 'Files Moved', 'Selected files moved successfully.')
+    #     elif mode == 'copy':
+    #         QMessageBox.information(self, 'Files Copied', 'Selected files copied successfully.')
 
     def closeEvent(self, event):
         reply = QMessageBox.question(
