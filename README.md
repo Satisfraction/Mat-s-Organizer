@@ -1,18 +1,36 @@
 # Mat-s-Organizer
 
-Mat's Organizer ist ein Python-Programm, das Ihnen hilft, Ihre Dateien zu organisieren, indem Sie ausgewählte Dateien an einen bestimmten Ort verschieben oder kopieren. Das Programm verwendet die PyQt5-Bibliothek, um eine Benutzeroberfläche zu erstellen, die einfach zu bedienen ist.
+Dieses Programm ermöglicht es Benutzern, ihre Dateien zu organisieren, indem sie Dateien auswählen, suchen, umbenennen, kopieren und verschieben.
 
-Installation:
-Mat's Organizer benötigt Python 3 und die PyQt5-Bibliothek, um ausgeführt zu werden. Stellen Sie sicher, dass Python 3 auf Ihrem Computer installiert ist. Verwenden Sie dann den folgenden Befehl in der Eingabeaufforderung, um PyQt5 zu installieren:
+Anforderungen:
+Das Programm wurde mit Python 3.10 und PyQt5 5.15.0 getestet. Stellen Sie sicher, dass diese Versionen auf Ihrem Computer installiert sind, bevor Sie das Programm ausführen.
 
-pip install pyqt5
 
 Verwendung:
-Nachdem Sie das Programm gestartet haben, können Sie Dateien auswählen, indem Sie auf die Schaltfläche "Add Files" klicken oder indem Sie Ordner auswählen, indem Sie auf die Schaltfläche "Add Folder" klicken. Die ausgewählten Dateien werden in einer Tabelle auf der linken Seite des Programms aufgelistet. Sie können Dateien aus dieser Tabelle auswählen, indem Sie sie markieren und auf die Schaltfläche "Remove" klicken.
+Führen Sie die Datei Organizer.py aus, um das Programm zu starten. Es öffnet sich ein Fenster mit verschiedenen Schaltflächen und Optionen, um die ausgewählten Dateien zu organisieren.
 
-Sie können auch eine Vorschau der ausgewählten Datei anzeigen, indem Sie auf die Schaltfläche "Preview" klicken. Wenn Sie nach Dateien suchen möchten, können Sie Schlüsselwörter in das Textfeld "Search Keywords" eingeben und auf die Schaltfläche "Search" klicken.
 
-Um Dateien zu verschieben oder zu kopieren, müssen Sie zuerst das Zielverzeichnis auswählen, indem Sie auf die Schaltfläche "Select Target Directory" klicken. Wählen Sie dann den Modus "Move" oder "Copy", indem Sie auf die entsprechende Schaltfläche klicken. Wenn Sie Dateien verschieben oder kopieren möchten, klicken Sie auf die Schaltfläche "Move Files" oder "Copy Files".
+Schaltflächen:
+Add Files: Wählen Sie Dateien aus, die Sie organisieren möchten.
+Add Folder: Wählen Sie einen Ordner aus, um alle Dateien darin und in Unterordnern auszuwählen.
+Remove: Entfernen Sie ausgewählte Dateien aus der Liste.
+Preview: Zeigen Sie eine Vorschau der ausgewählten Datei an.
+Select Target Directory: Wählen Sie den Zielordner aus, in den die ausgewählten Dateien verschoben oder kopiert werden sollen.
+Search: Suchen Sie nach Dateien mit bestimmten Schlüsselwörtern im Dateinamen.
+Move Files: Verschieben Sie ausgewählte Dateien in den Zielordner.
+Copy Files: Kopieren Sie ausgewählte Dateien in den Zielordner.
+Rename Files: Benennen Sie ausgewählte Dateien mit einer neuen Namenskonvention um.
+Beispielanwendung
+Wählen Sie mit der Schaltfläche "Add Files" oder "Add Folder" die Dateien aus, die Sie organisieren möchten.
+Überprüfen Sie die ausgewählten Dateien in der Tabelle "Selected Files".
+Wählen Sie mit der Schaltfläche "Select Target Directory" den Zielordner aus.
+Klicken Sie auf "Move Files" oder "Copy Files", um die ausgewählten Dateien in den Zielordner zu verschieben oder zu kopieren.
+Klicken Sie auf "Rename Files", um die Dateien umzubenennen.
+
+
+Autor:
+Dieses Programm wurde von Satisfraction entwickelt.
+
 
 Lizenz:
 Dieses Programm ist unter der MIT-Lizenz lizenziert. Sie können den Quellcode frei verwenden und ändern, solange Sie die Lizenzbedingungen einhalten.

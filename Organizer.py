@@ -1,7 +1,7 @@
 import os, sys, shutil
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QHBoxLayout, QLabel, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QFileDialog, QLineEdit, QApplication
+from PyQt5.QtWidgets import QHBoxLayout, QLabel, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QFileDialog, QLineEdit, QApplication, QInputDialog
 
 
 class FileOrganizer(QWidget):
@@ -66,6 +66,9 @@ class FileOrganizer(QWidget):
 
         copy_files_button = QPushButton("Copy Files")
         copy_files_button.clicked.connect(self.copy_files)
+        
+        rename_files_button = QPushButton('Rename Files')
+        rename_files_button.clicked.connect(self.rename_files)
 
         # Create text edit for keywords
         self.keywords_edit = QLineEdit()
@@ -93,6 +96,7 @@ class FileOrganizer(QWidget):
         button_layout.addWidget(select_target_button)
         button_layout.addWidget(move_files_button)
         button_layout.addWidget(copy_files_button)
+        button_layout.addWidget(rename_files_button)
 
         main_layout = QVBoxLayout(self)
         main_layout.addLayout(files_layout)
@@ -149,16 +153,24 @@ class FileOrganizer(QWidget):
             self.update_files_table()
             QMessageBox.information(self, "Files Copied", "Selected files copied successfully.")
         
-    def set_mode(self, mode):
-        self.mode = mode
-        if mode == "move":
-            self.move_files_button.setText("Move Files")
-            self.move_files_button.clicked.disconnect()
-            self.move_files_button.clicked.connect(self.move_files)
-        elif mode == "copy":
-            self.move_files_button.setText("Copy Files")
-            self.move_files_button.clicked.disconnect()
-            self.move_files_button.clicked.connect(self.copy_files)
+    def rename_files(self):
+        if not self.selected_files:
+            QMessageBox.warning(self, 'Error', 'No files selected.')
+            return
+    
+        format_dialog = QInputDialog()
+        format_dialog.setLabelText('Enter the format for the new file names:')
+        format_dialog.setTextValue('file_{}.txt')
+        format_dialog.exec_()
+        format_text = format_dialog.textValue()
+    
+        for i, file_path in enumerate(self.selected_files):
+            new_name = format_text.format(i)
+            os.rename(file_path, os.path.join(os.path.dirname(file_path), new_name))
+    
+        self.selected_files = []
+        self.update_files_table()
+        QMessageBox.information(self, 'Files Renamed', 'Selected files renamed successfully.')
 
     def add_files(self):
         file_dialog = QFileDialog()
@@ -232,33 +244,6 @@ class FileOrganizer(QWidget):
             return True
         else:
             return all(keyword in file_name for keyword in self.keywords.split())
-    
-    # def move_files(self, mode):
-    #     if not self.target_directory:
-    #         QMessageBox.warning(self, 'Error', 'Target directory not set.')
-    #         return
-    #     if not self.selected_files:
-    #         QMessageBox.warning(self, 'Error', 'No files selected.')
-    #         return
-    #     for file_path in self.selected_files:
-    #         file_name = os.path.basename(file_path)
-    #         target_path = os.path.join(self.target_directory, file_name)
-    #         if os.path.exists(target_path):
-    #             reply = QMessageBox.question(self, 'File Exists', f"{target_path} already exists. Replace it?")
-    #             if reply == QMessageBox.Yes:
-    #                 os.remove(target_path)
-    #             else:
-    #                 continue
-    #         if mode == 'move':
-    #             shutil.move(file_path, target_path)
-    #         elif mode == 'copy':
-    #             shutil.copy(file_path, target_path)
-    #     self.selected_files = []
-    #     # self.update_files_table()  # either define the method or remove this line
-    #     if mode == 'move':
-    #         QMessageBox.information(self, 'Files Moved', 'Selected files moved successfully.')
-    #     elif mode == 'copy':
-    #         QMessageBox.information(self, 'Files Copied', 'Selected files copied successfully.')
 
     def closeEvent(self, event):
         reply = QMessageBox.question(
