@@ -6,14 +6,14 @@ Mat's Organizer is a file management tool built using PyQt5, which allows you to
 
 To use Mat's Organizer, you need to have Python installed on your system along with the PyQt5 library. You can install PyQt5 by running the following command:
 
-pip install pyqt5
+`pip install pyqt5`
 
 
 ## Usage
 
 To run the tool, execute the script by running the following command:
 
-python Organizer.py
+`python Organizer.py`
 
 
 ## GUI Elements
@@ -67,4 +67,4 @@ This tool was created by Satisfraction
 
 ## License
 
-This tool is under the MIT license.
+This project is licensed under the [MIT License](LICENSE).
